@@ -5,6 +5,7 @@ import moment from 'moment';
 const app = express();
 const port = 3000;
 const staticMiddleware = express.static('public'); // direktorij sa statičkim datotekama
+let arr = [];
 
 app.use('/', staticMiddleware);
 
@@ -31,6 +32,25 @@ app.get('/prognoza', (req, res) => {
     };
 
     response += vrijeme[getRandomInt(3)];
+
+    res.json(response);
+});
+
+app.get('/dodaj', (req, res) => {
+    const randomBroj = (min, max) => {
+        // min and max included
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    };
+
+    const broj = randomBroj(0, 100);
+
+    arr.push(broj);
+
+    res.json('Broj dodan! (ukupno: ' + arr.length + ')');
+});
+
+app.get('/dohvati', (req, res) => {
+    let response = arr.join(',');
 
     res.json(response);
 });
