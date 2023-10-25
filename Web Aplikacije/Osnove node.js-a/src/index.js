@@ -7,6 +7,38 @@ const app = express();
 const port = 3000;
 const staticMiddleware = express.static('public'); // direktorij sa statičkim datotekama
 let arr = [];
+const studenti = [
+    {
+        JMBAG: '0303111111',
+        ime: 'Ivo',
+        prezime: 'Ivić',
+        godina_studija: 1,
+    },
+    {
+        JMBAG: '0303131111',
+        ime: 'Ana',
+        prezime: 'Anić',
+        godina_studija: 3,
+    },
+    {
+        JMBAG: '0303111711',
+        ime: 'Marko',
+        prezime: 'Markić',
+        godina_studija: 2,
+    },
+    {
+        JMBAG: '0303114611',
+        ime: 'Marija',
+        prezime: 'Marić',
+        godina_studija: 3,
+    },
+    {
+        JMBAG: '0303118811',
+        ime: 'Karlo',
+        prezime: 'Karlić',
+        godina_studija: 1,
+    },
+];
 
 app.use(
     cors({
@@ -59,6 +91,26 @@ app.get('/dodaj', (req, res) => {
 
 app.get('/dohvati', (req, res) => {
     res.json(arr);
+});
+
+app.get('/studenti', (req, res) => {
+    let response = [];
+
+    for (let student of studenti) {
+        response.push(student.ime);
+    }
+
+    res.json(response);
+});
+
+app.get('/studenti/first', (req, res) => {
+    res.json(studenti[0].ime);
+});
+
+app.get('/studenti/last', (req, res) => {
+    let response = studenti[studenti.length - 1];
+
+    res.json(response.ime);
 });
 
 app.listen(port, () => console.log(`Slušam na portu ${port}!`));
