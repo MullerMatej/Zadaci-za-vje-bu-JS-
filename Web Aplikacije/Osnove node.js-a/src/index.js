@@ -40,12 +40,7 @@ const studenti = [
     },
 ];
 
-app.use(
-    cors({
-        credentials: true,
-        origin: 'http://127.0.0.1:5500',
-    })
-);
+app.use(cors());
 
 app.use('/', staticMiddleware);
 
@@ -111,6 +106,27 @@ app.get('/studenti/last', (req, res) => {
     let response = studenti[studenti.length - 1];
 
     res.json(response.ime);
+});
+
+app.get('/kalkulator', (req, res) => {
+    let response;
+
+    let upit = req.query;
+    let operacija = upit.operacija;
+    let a = parseInt(upit.a);
+    let b = parseInt(upit.b);
+
+    if (operacija === 'zbrajanje') {
+        response = a + b;
+    } else if (operacija === 'oduzimanje') {
+        response = a - b;
+    } else if (operacija === 'množenje') {
+        response = a * b;
+    } else if (operacija === 'dijeljenje') {
+        response = a / b;
+    }
+
+    res.json(response);
 });
 
 app.listen(port, () => console.log(`Slušam na portu ${port}!`));
