@@ -129,4 +129,22 @@ app.get('/kalkulator', (req, res) => {
     res.json(response);
 });
 
+app.get('/fibonacci', (req, res) => {
+    let response;
+
+    let upit = req.query;
+    let k = upit.k;
+
+    const fib = (n) => {
+        if (n <= 1) {
+            return n;
+        }
+        return fib(n - 1) + fib(n - 2);
+    };
+
+    response = fib(k);
+
+    res.json(response);
+});
+
 app.listen(port, () => console.log(`Slušam na portu ${port}!`));
