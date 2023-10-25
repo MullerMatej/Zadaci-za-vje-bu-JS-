@@ -2,10 +2,18 @@ import express from 'express';
 import routes from './routes.js';
 import moment from 'moment';
 
+const cors = require('cors');
 const app = express();
 const port = 3000;
 const staticMiddleware = express.static('public'); // direktorij sa statičkim datotekama
 let arr = [];
+
+app.use(
+    cors({
+        credentials: true,
+        origin: 'http://127.0.0.1:5500',
+    })
+);
 
 app.use('/', staticMiddleware);
 
@@ -50,9 +58,7 @@ app.get('/dodaj', (req, res) => {
 });
 
 app.get('/dohvati', (req, res) => {
-    let response = arr.join(',');
-
-    res.json(response);
+    res.json(arr);
 });
 
 app.listen(port, () => console.log(`Slušam na portu ${port}!`));

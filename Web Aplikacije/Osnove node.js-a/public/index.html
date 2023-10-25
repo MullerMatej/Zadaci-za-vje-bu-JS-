@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com"
+        />
+        <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700&family=Caveat:wght@500&family=Lobster+Two&family=Manrope:wght@700&family=Montserrat:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+        <title>My first Vue app</title>
+        <script src="https://unpkg.com/vue@2"></script>
+    </head>
+    <body style="background-color: #edede9">
+        <div
+            id="app"
+            style="text-align: center"
+        >
+            <h1 style="margin-top: 20rem; font-family: Manrope; font-weight: 700; font-size: 5rem; color: #d5bdaf">
+                {{ message }} <br />
+                {{ prognoza }}
+            </h1>
+        </div>
+
+        <script>
+            async function dohvatiDatum() {
+                try {
+                    let res = await fetch('http://localhost:3000/datum');
+                    const data = await res.json();
+                    app.message = data;
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+            async function dohvatiPrognozu() {
+                try {
+                    let res = await fetch('http://localhost:3000/prognoza');
+                    const data = await res.json();
+                    app.prognoza = data;
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    message: 'Učitavam vrijeme...',
+                    prognoza: 'Učitavam prognozu...',
+                },
+            });
+
+            dohvatiPrognozu();
+            dohvatiDatum();
+        </script>
+    </body>
+</html>
